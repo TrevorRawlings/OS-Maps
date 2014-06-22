@@ -10,6 +10,7 @@ using Microsoft.Phone.Shell;
 using PhoneApp2.Resources;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
+using System.Collections.Specialized;
 
 
 namespace PhoneApp2
@@ -25,13 +26,11 @@ namespace PhoneApp2
             InitializeComponent();
 
             
-               mapView = new TileMapView();
-              mapControl = new MapControl(mapView);
-             mapControl.StatusChanged += new StatusChangedEventHandler(OnMapStatusChanged);
+            mapView = new TileMapView();
+            mapControl = new MapControl(mapView);
+            mapControl.StatusChanged += new StatusChangedEventHandler(OnMapStatusChanged);
             mapView.MapPositionChanged += new MapPositionChangedEventHandler(OnMapPositionChanged);
-            
-
-
+            mapView.TileImages.CollectionChanged += new NotifyCollectionChangedEventHandler(OnTileImagesChanged);
             // Sample code to localize the ApplicationBar
             //BuildLocalizedApplicationBar();
         }
@@ -51,6 +50,11 @@ namespace PhoneApp2
         {
             LatitudeTextBlock.Text = geocoordinate.Latitude.ToString("0.00");
             LongitudeTextBlock.Text = geocoordinate.Longitude.ToString("0.00");
+        }
+
+        private void OnTileImagesChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+
         }
 
         private void OneShotLocation_Click(object sender, RoutedEventArgs e)

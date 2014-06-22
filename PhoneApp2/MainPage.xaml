@@ -17,6 +17,7 @@
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -45,15 +46,24 @@
             <TextBlock Text="Mr T's First App" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
-        <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <StackPanel>
-                <Button x:Name="OneShotLocationButton" Click="OneShotLocation_Click" Content="get one-shot location"/>
-                <TextBlock x:Name="LatitudeTextBlock"/>
-                <TextBlock x:Name="LongitudeTextBlock"/>
-                <TextBlock x:Name="StatusTextBlock"/>
-            </StackPanel>
-        </Grid>
+        <!--ContentPanel - place additional content here-->        
+        <StackPanel Grid.Row="1" >
+           <Button x:Name="OneShotLocationButton" Click="OneShotLocation_Click" Content="get one-shot location"/>
+           <TextBlock x:Name="LatitudeTextBlock"/>
+           <TextBlock x:Name="LongitudeTextBlock"/>
+           <TextBlock x:Name="StatusTextBlock"/>
+        </StackPanel>
+        
+        <Canvas x:Name="MapCanvas" Grid.Row="2">
+            <TextBlock Text="Canvas Layout Demo"  FontSize="15" FontWeight="Bold"
+                    Foreground="Red"  Canvas.Top="-8" Canvas.Left="25"/>
+
+            <!-- <Canvas.Clip>
+                <RectangleGeometry Rect="0,0,250,250" />
+            </Canvas.Clip> -->
+        </Canvas>
+        
+
 
         <!--Uncomment to see an alignment grid to help ensure your controls are
             aligned on common boundaries.  The image has a top margin of -32px to

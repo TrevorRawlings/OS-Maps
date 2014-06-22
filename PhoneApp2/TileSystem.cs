@@ -224,5 +224,7 @@ namespace PhoneApp2
                 }
             }
         }
+        
+        public static 
     }
 }

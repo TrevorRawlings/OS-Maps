@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Text;
 using Windows.Devices.Geolocation;
 
@@ -8,35 +9,47 @@ namespace PhoneApp2
 {
     public delegate void MapPositionChangedEventHandler(Geocoordinate geocoordinate);
 
+    
+    
+
     public class TileMapView
     {
 
         public event MapPositionChangedEventHandler MapPositionChanged;
+        
         private Geocoordinate mapPosition;
+        private TileCache tileCache;
 
+        public TileImageList TileImages;
 
+        int canvasWidth;
+        int canvasHeight;
 
-        int width;
-        int height;
+        int levelOfDetail = 15;
+        
+        
+        int pixelX, pixelY, tileX, tileY;
 
         #region Constructors
         public TileMapView(int width = 100, int height = 100)
         {
-            this.width = width;
-            this.height = height;
+            this.canvasWidth = width;
+            this.canvasHeight = height;
+            this.tileCache = new TileCache();
+            this.TileImages = new TileImageList();
         }
         #endregion
 
         public int Width
         {
-            get { return width; }
-            set { width = value; } // TODO: recalculate tile grid
+            get { return canvasWidth; }
+            set { canvasWidth = value; } // TODO: recalculate tile grid
         }
 
         public int Height
         {
-            get { return height; }
-            set { height = value; }  // TODO: recalculate tile grid
+            get { return canvasHeight; }
+            set { canvasHeight = value; }  // TODO: recalculate tile grid
         }
 
         public Geocoordinate MapPosition
@@ -58,7 +71,20 @@ namespace PhoneApp2
         
         public void CenterOnLocation(Geocoordinate geocoordinate)
         {
+            TileImage tileImage;
+
             updateMapPosition(geocoordinate);
+
+            TileSystem.LatLongToPixelXY(geocoordinate.Latitude, geocoordinate.Longitude, tileCache.LevelOfDetail, out pixelX, out pixelY);
+            TileSystem.PixelXYToTileXY(pixelX, pixelY, out tileX, out tileY);
+            string quadKey = TileSystem.TileXYToQuadKey(tileX, tileY, tileCache.LevelOfDetail);
+
+            tileImage = TileImages.findByQuadKey(quadKey);
+            if (tileImage == null) {
+                TileImages.Add(tileCache.GetFile(quadKey));
+            }
         }
+
+
     }
 }

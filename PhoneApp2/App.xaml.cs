@@ -38,6 +38,8 @@ namespace PhoneApp2
             // Show graphics profiling information while debugging.
             if (Debugger.IsAttached)
             {
+                Debug.WriteLine("In App");
+
                 // Display the current frame rate counters.
                 Application.Current.Host.Settings.EnableFrameRateCounter = true;
 
@@ -61,29 +63,34 @@ namespace PhoneApp2
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
+            Debug.WriteLine("In Application_Launching");
         }
 
         // Code to execute when the application is activated (brought to foreground)
         // This code will not execute when the application is first launched
         private void Application_Activated(object sender, ActivatedEventArgs e)
         {
+            Debug.WriteLine("In Application_Activated");
         }
 
         // Code to execute when the application is deactivated (sent to background)
         // This code will not execute when the application is closing
         private void Application_Deactivated(object sender, DeactivatedEventArgs e)
         {
+            Debug.WriteLine("In Application_Deactivated");
         }
 
         // Code to execute when the application is closing (eg, user hit Back)
         // This code will not execute when the application is deactivated
         private void Application_Closing(object sender, ClosingEventArgs e)
         {
+            Debug.WriteLine("In Application_Closing");
         }
 
         // Code to execute if a navigation fails
         private void RootFrame_NavigationFailed(object sender, NavigationFailedEventArgs e)
         {
+            Debug.WriteLine("In RootFrame_NavigationFailed");
             if (Debugger.IsAttached)
             {
                 // A navigation has failed; break into the debugger
@@ -94,6 +101,7 @@ namespace PhoneApp2
         // Code to execute on Unhandled Exceptions
         private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
         {
+            Debug.WriteLine("In Application_UnhandledException");
             if (Debugger.IsAttached)
             {
                 // An unhandled exception has occurred; break into the debugger
