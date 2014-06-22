@@ -3,7 +3,7 @@ using System.Text;
 
 // From: http://msdn.microsoft.com/en-us/library/bb259689.aspx
 
-namespace Rawlings.BingMaps
+namespace PhoneApp2
 {
     static class TileSystem
     {

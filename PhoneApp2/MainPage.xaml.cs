@@ -8,18 +8,54 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using PhoneApp2.Resources;
+using System.Threading.Tasks;
+using Windows.Devices.Geolocation;
+
 
 namespace PhoneApp2
 {
     public partial class MainPage : PhoneApplicationPage
     {
+        private MapControl mapControl;
+        private TileMapView mapView;
+
         // Constructor
         public MainPage()
         {
             InitializeComponent();
 
+            
+               mapView = new TileMapView();
+              mapControl = new MapControl(mapView);
+             mapControl.StatusChanged += new StatusChangedEventHandler(OnMapStatusChanged);
+            mapView.MapPositionChanged += new MapPositionChangedEventHandler(OnMapPositionChanged);
+            
+
+
             // Sample code to localize the ApplicationBar
             //BuildLocalizedApplicationBar();
+        }
+
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+        
+            mapControl.CheckForLocationConsent();
+        }
+
+        private void OnMapStatusChanged(string value)
+        {
+            StatusTextBlock.Text = value;
+        }
+
+        private void OnMapPositionChanged(Geocoordinate geocoordinate)
+        {
+            LatitudeTextBlock.Text = geocoordinate.Latitude.ToString("0.00");
+            LongitudeTextBlock.Text = geocoordinate.Longitude.ToString("0.00");
+        }
+
+        private void OneShotLocation_Click(object sender, RoutedEventArgs e)
+        {
+            mapControl.navigateToCurrentGeoposition();
         }
 
         // Sample code for building a localized ApplicationBar
