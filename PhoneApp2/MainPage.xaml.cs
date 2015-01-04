@@ -11,6 +11,8 @@ using PhoneApp2.Resources;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 using System.Collections.Specialized;
+using System.Diagnostics;
+using System.Windows.Media;
 
 
 namespace PhoneApp2
@@ -60,6 +62,74 @@ namespace PhoneApp2
         private void OneShotLocation_Click(object sender, RoutedEventArgs e)
         {
             mapControl.navigateToCurrentGeoposition();
+        }
+
+        private void StackPanel_ManipulationStarted(object sender, System.Windows.Input.ManipulationStartedEventArgs e)
+        {
+            
+            e.ManipulationContainer = this;
+            e.Handled = true;
+        }
+
+        private void StackPanel_ManipulationDelta(object sender, System.Windows.Input.ManipulationDeltaEventArgs e)
+        {
+            
+
+         //   TransformGroup transformGroup = (TransformGroup) MapCanvas.RenderTransform;
+
+            // Get the Rectangle and its RenderTransform matrix.
+         //   Rectangle rectToMove = e.OriginalSource as Rectangle;
+          //  Matrix rectsMatrix = ((MatrixTransform)rectToMove.RenderTransform).Matrix;
+
+          
+
+            // Resize the Rectangle.  Keep it square 
+            // so use only the X value of Scale.
+          //  rectsMatrix.ScaleAt(e.DeltaManipulation.Scale.X,
+          //                      e.DeltaManipulation.Scale.X,
+          //                      e.ManipulationOrigin.X,
+          //                      e.ManipulationOrigin.Y);
+
+            // Move the Rectangle.
+            TranslateTransform translateTransform = new TranslateTransform();
+            translateTransform.X = e.DeltaManipulation.Translation.X;
+            translateTransform.Y = e.DeltaManipulation.Translation.Y;
+
+            TransformGroup transformGroup = new TransformGroup();
+            transformGroup.Children.Add(MapCanvas.RenderTransform);
+            transformGroup.Children.Add(translateTransform);
+
+            // Apply the changes to the Rectangle.
+            MapCanvas.RenderTransform = transformGroup;
+
+
+
+
+            // Check if the rectangle is completely in the window.
+            // If it is not and intertia is occuring, stop the manipulation.
+  //          if (e.IsInertial && !containingRect.Contains(shapeBounds))
+//            {
+  //              e.Complete();
+    //        }
+
+
+            e.Handled = true;
+        }
+
+        private void StackPanel_ManipulationCompleted(object sender, System.Windows.Input.ManipulationCompletedEventArgs e)
+        {
+            if (MapCanvas.RenderTransform is TransformGroup) {
+                mapView.ApplyTransformMatrix(((TransformGroup) MapCanvas.RenderTransform).Value);
+            }
+            
+         
+        }
+
+        private void canvasContainer_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            RectangleGeometry clipGeometry = new RectangleGeometry();
+            clipGeometry.Rect = new System.Windows.Rect(0, 0, canvasContainer.ActualWidth, canvasContainer.ActualHeight);
+            canvasContainer.Clip = clipGeometry;
         }
 
         // Sample code for building a localized ApplicationBar

@@ -49,16 +49,16 @@
         <!--ContentPanel - place additional content here-->        
         <StackPanel Grid.Row="1" >
            <Button x:Name="OneShotLocationButton" Click="OneShotLocation_Click" Content="get one-shot location"/>
-           <TextBlock x:Name="LatitudeTextBlock"/>
-           <TextBlock x:Name="LongitudeTextBlock"/>
-           <TextBlock x:Name="StatusTextBlock"/>
+           <TextBlock x:Name="LatitudeTextBlock" Margin="0,0,256,0"/>
+            <TextBlock x:Name="LongitudeTextBlock" Margin="0,0,256,0"/>
+            <TextBlock x:Name="StatusTextBlock"/>
         </StackPanel>
 
-
-        <Canvas x:Name="MapCanvas" Grid.Row="2">
-            <TextBlock Text="Canvas Layout Demo"  FontSize="15" FontWeight="Bold"
-                    Foreground="Red"  Canvas.Top="-8" Canvas.Left="25"/>
-        </Canvas>
+        <StackPanel x:Name="canvasContainer" Grid.Row="2" ManipulationStarted="StackPanel_ManipulationStarted" ManipulationDelta="StackPanel_ManipulationDelta" ManipulationCompleted="StackPanel_ManipulationCompleted" SizeChanged="canvasContainer_SizeChanged">
+            <Canvas x:Name="MapCanvas" Height="{Binding ActualHeight, ElementName=canvasContainer}">            
+            
+            </Canvas>
+        </StackPanel>
         
 
 

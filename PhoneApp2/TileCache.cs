@@ -185,12 +185,21 @@ namespace PhoneApp2
                     isfs.Read(data, 0, data.Length); 
                     isfs.Close(); 
                 } 
-            } 
+            }
 
-            MemoryStream ms = new MemoryStream(data); 
-            BitmapImage bi = new BitmapImage();
-            bi.SetSource(ms);
-            return bi;
+
+            try
+            {
+                MemoryStream ms = new MemoryStream(data);
+                BitmapImage bi = new BitmapImage();
+                bi.SetSource(ms);
+                return bi;
+            }
+            catch (ArgumentException ex)
+            {
+                Debug.WriteLine("Error while loading image: " + ex.ToString());
+                return new BitmapImage();
+            }
         }
 
         public void Dispose()
@@ -213,41 +222,6 @@ namespace PhoneApp2
     {
         public event TileImageDownloadedEventHandler TileImageDownloaded;
 
-        //public TileImageList()
-        //{
-        //    this.CollectionChanged += tileImageList_CollectionChanged;
-        //}
-
-        //private void tileImageList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        //{
-            
-        //    if (e.Action == NotifyCollectionChangedAction.Remove || 
-        //        e.Action == NotifyCollectionChangedAction.Replace || 
-        //        e.Action == NotifyCollectionChangedAction.Reset)
-        //    {
-        //        foreach (TileImage tile in e.OldItems)
-        //        {
-        //            tile.TileImageDownloaded -= title_ImageDownloaded;
-        //        }
-        //    }
-
-        //    if (e.Action == NotifyCollectionChangedAction.Add || e.Action == NotifyCollectionChangedAction.Replace)
-        //    {
-        //        foreach (TileImage tile in e.NewItems)
-        //        {
-        //            tile.TileImageDownloaded += title_ImageDownloaded;
-        //        }
-        //    }
-        //}
-
-        //private void title_ImageDownloaded(TileImage source)
-        //{
-        //    if (TileImageDownloaded != null)
-        //    {
-        //        TileImageDownloaded(source);
-        //    }
-        //}
-
         public TileImage FindByQuadKey(string quadKey)
         {
             foreach (TileImage image in this)
@@ -260,7 +234,16 @@ namespace PhoneApp2
             return null;
         }
 
-        
+        public TileImage[] AsArray()
+        {
+            TileImage[] items = new TileImage[this.Count];
+            for (int i = 0; i < this.Count; i++)
+            {
+                items[i] = this[i];
+            }
+            return items;
+
+        }
     }
 
 
