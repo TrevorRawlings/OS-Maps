@@ -25,8 +25,8 @@ namespace PhoneApp2
         {
             InitializeComponent();
 
-            
-            mapView = new TileMapView();
+
+            mapView = new TileMapView(MapCanvas);
             mapControl = new MapControl(mapView);
             mapControl.StatusChanged += new StatusChangedEventHandler(OnMapStatusChanged);
             mapView.MapPositionChanged += new MapPositionChangedEventHandler(OnMapPositionChanged);
@@ -46,7 +46,7 @@ namespace PhoneApp2
             StatusTextBlock.Text = value;
         }
 
-        private void OnMapPositionChanged(Geocoordinate geocoordinate)
+        private void OnMapPositionChanged(LatLongCoordinate geocoordinate)
         {
             LatitudeTextBlock.Text = geocoordinate.Latitude.ToString("0.00");
             LongitudeTextBlock.Text = geocoordinate.Longitude.ToString("0.00");

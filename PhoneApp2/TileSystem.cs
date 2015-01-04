@@ -40,6 +40,11 @@ namespace PhoneApp2
             return (uint) 256 << levelOfDetail;
         }
 
+        public static uint TileSize(int levelOfDetail)
+        {
+            return 256;
+        }
+         
 
 
         /// <summary>
@@ -186,6 +191,13 @@ namespace PhoneApp2
         }
 
 
+        public static string PixelXYToQuadKey(int pixelX, int pixelY, int levelOfDetail)
+        {
+            int tileX, tileY;
+            TileSystem.PixelXYToTileXY(pixelX, pixelY, out tileX, out tileY);
+            return TileSystem.TileXYToQuadKey(tileX, tileY, levelOfDetail);
+        }
+
 
         /// <summary>
         /// Converts a QuadKey into tile XY coordinates.
@@ -225,6 +237,6 @@ namespace PhoneApp2
             }
         }
         
-        public static 
+     
     }
 }

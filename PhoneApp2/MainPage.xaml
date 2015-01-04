@@ -53,16 +53,14 @@
            <TextBlock x:Name="LongitudeTextBlock"/>
            <TextBlock x:Name="StatusTextBlock"/>
         </StackPanel>
-        
+
+
         <Canvas x:Name="MapCanvas" Grid.Row="2">
             <TextBlock Text="Canvas Layout Demo"  FontSize="15" FontWeight="Bold"
                     Foreground="Red"  Canvas.Top="-8" Canvas.Left="25"/>
-
-            <!-- <Canvas.Clip>
-                <RectangleGeometry Rect="0,0,250,250" />
-            </Canvas.Clip> -->
         </Canvas>
         
+
 
 
         <!--Uncomment to see an alignment grid to help ensure your controls are

@@ -77,7 +77,7 @@ namespace PhoneApp2
                     timeout: TimeSpan.FromSeconds(10)
                     );
 
-                mapView.CenterOnLocation(geoposition.Coordinate);               
+                mapView.CenterOnLocation(new LatLongCoordinate(geoposition.Coordinate));               
             }
             catch (Exception ex)
             {

@@ -93,6 +93,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TileSystem.cs" />
+    <Compile Include="Rectangle.cs" />
+    <Compile Include="LatLongCoordinate.cs" />
     <Compile Include="MapControl.cs" />
     <Compile Include="TileCache.cs" />
     <Compile Include="TileMapView.cs" />
@@ -106,7 +109,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="TileSystem.cs" />
+    <Compile Include="DownloadHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
